@@ -1,6 +1,6 @@
 ---
 title: "SPARKS FOUNDATION TASK ONE"
-author: "SIMPLE LINEAR REGRESSION"
+author: "AMAL THOMAS"
 date:    
 output:
   slidy_presentation: default
