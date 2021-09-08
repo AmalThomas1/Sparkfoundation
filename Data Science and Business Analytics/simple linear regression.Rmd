@@ -1,0 +1,120 @@
+---
+title: "SPARKS FOUNDATION TASK ONE"
+author: "SIMPLE LINEAR REGRESSION"
+date:    
+output:
+  slidy_presentation: default
+  ioslides_presentation: default
+  beamer_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Import dataset
+
+```{r}
+mark <- read.csv("C:/Users/hp/Desktop/mark.csv")
+mark
+```
+
+Finding rows and columns.
+
+```{r}.
+dim(mark)
+```
+
+Creating plot for identifying the relationship.
+
+```{r}
+plot(mark,main='hours vs mark',col='red',lwd=2)
+```
+
+#From the graph above, we can clearly see that there is a positive linear relation between the number of hours studied and percentage of score.
+
+Splitting the dataset as training and testing. 80% for training and 20% for testing.
+
+```{r}
+set.seed(0)
+train=sample(1:nrow(mark),20)
+train_set=mark[train,]
+test_set=mark[-train,]
+dim(train_set)
+dim(test_set)
+```
+
+
+Creating model
+
+#We have split our data into training and testing sets, and now  finally the time to train our algorithm.
+
+```{r}
+model <- lm(Scores~Hours,data=train_set)
+summary(model)
+```
+
+#Training complete.
+
+
+plotting regression line
+
+```{r}
+plot(mark$Hours,mark$Scores,main = 'Hours vs Scores')
+abline(model,col='red',lwd=3)
+```
+
+
+Make predictoion
+
+#Now that we have trained our algorithm, it's time to make some predictions.
+
+```{r}
+prediction <-predict(model,newdata=test_set)
+prediction
+```
+
+Comparing the actual and predicted
+
+```{r}
+df <- data.frame(test_set,prediction)
+df
+```
+
+predicting the mark when hours=9.25
+
+```{r}
+new <- data.frame(Hours=c(9.25))
+new
+value <- predict(model,newdata = new)
+
+```
+```{r}
+value
+```
+No of Hours = 9.25
+Predicted Score = 92.21263
+
+
+Evaluating the model
+
+#The final step is to evaluate the performance of algorithm. This step is particularly important to compare how well different algorithms perform on a particular dataset. For simplicity here, we have chosen the mean square error. There are many such metrics.
+
+#finding the mean square error
+
+```{r}
+mse <- mean((test_set$Scores-prediction)^2)
+mse
+```
+#The error rate is 28% balance 72% our model is correct.
+
+
+#finding the mean absolute error
+
+```{r}
+mae <- mean(abs(test_set$Scores-prediction))
+mae
+
+```
+
+
